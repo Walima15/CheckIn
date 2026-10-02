@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Zambia Web3 Builders Meetup",
+    "description": "A hands-on evening for builders shipping on Avalanche. Talks, demos, and time to meet the local Web3 community. Sample event for the CheckIn testnet MVP.",
+    "imageURI": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1400&q=60",
+    "daysFromNow": 14,
+    "durationHours": 3,
+    "venue": "Lusaka Innovation Hub",
+    "location": "Lusaka, Zambia",
+    "category": "Web3",
+    "priceAvax": "0.01",
+    "maxSupply": 100,
+    "bonusPoints": 15,
+    "transfersAllowed": true
+  },
+  {
+    "name": "Lusaka Tech & Innovation Conference",
+    "description": "A full-day conference for founders, engineers, and operators. Sessions cover product, infrastructure, and how teams ship with blockchain tools. Sample event.",
+    "imageURI": "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1400&q=60",
+    "daysFromNow": 30,
+    "durationHours": 8,
+    "venue": "Mulungushi International Conference Centre",
+    "location": "Lusaka, Zambia",
+    "category": "Conferences",
+    "priceAvax": "0.02",
+    "maxSupply": 250,
+    "bonusPoints": 20,
+    "transfersAllowed": true
+  },
+  {
+    "name": "Bitcoin & Blockchain Community Meetup",
+    "description": "An open community night on Bitcoin, Avalanche, and practical uses of on-chain tickets and proof of attendance. Sample event.",
+    "imageURI": "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=1400&q=60",
+    "daysFromNow": 21,
+    "durationHours": 2,
+    "venue": "The Hive Community Space",
+    "location": "Lusaka, Zambia",
+    "category": "Community",
+    "priceAvax": "0.005",
+    "maxSupply": 80,
+    "bonusPoints": 10,
+    "transfersAllowed": true
+  },
+  {
+    "name": "African Developers Connect",
+    "description": "Workshops and mentorship for early-career developers. Tickets are digital, verifiable, and issued on Avalanche Testnet. Sample event.",
+    "imageURI": "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1400&q=60",
+    "daysFromNow": 45,
+    "durationHours": 6,
+    "venue": "BongoHive",
+    "location": "Lusaka, Zambia",
+    "category": "Education",
+    "priceAvax": "0.015",
+    "maxSupply": 150,
+    "bonusPoints": 25,
+    "transfersAllowed": false
+  }
+]

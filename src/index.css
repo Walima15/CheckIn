@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f6f3ee;
+  --surface: #fffcf8;
+  --surface-2: #f1ebe4;
+  --text: #1c1422;
+  --muted: #655d6c;
+  --line: rgba(28, 20, 34, 0.1);
+  --accent: #e84142;
+  --good: #0c8f62;
+  --warn: #a16207;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #09090d;
+  --surface: #14141c;
+  --surface-2: #1d1d27;
+  --text: #f7f5f8;
+  --muted: #b0a8b8;
+  --line: rgba(255, 255, 255, 0.1);
+  --accent: #ff4b4b;
+  --good: #3dd68c;
+  --warn: #f5b942;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(900px 420px at 10% -10%, rgba(232, 65, 66, 0.16), transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: Outfit, system-ui, sans-serif;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(232, 65, 66, 0.28);
+}
+
+#checkin-reader {
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+#checkin-reader video {
+  width: 100% !important;
+  border-radius: 16px;
+}
+
+.grid-fade {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--text) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--text) 7%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at center, black, transparent 75%);
+}

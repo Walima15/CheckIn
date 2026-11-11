@@ -10,3 +10,9 @@ typechain-types
 *.log
 .DS_Store
 data/store.json
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebase/
+service-account.json
+*firebase-adminsdk*.json

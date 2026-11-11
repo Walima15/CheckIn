@@ -10,16 +10,18 @@ The app never asks for a seed phrase or private key. Wallet actions open Core Wa
 
 ```
 contracts/          Solidity: events, ERC-721 tickets, rewards
-test/               Hardhat tests for the full attendee journey
-scripts/            Deploy, seed demo events, export ABIs
+test/               Hardhat tests for the attendee journey
+test-firestore/     Firestore emulator tests for names and page views
+scripts/            Deploy, seed demo events, export ABIs, seed Firestore
 src/                React + TypeScript app
 src/config/         Avalanche Fuji settings and deployed addresses
 src/contracts/abi/  Contract ABIs used by the frontend
-server/             Small local API for display names and page views
-data/               Sample events and the local metadata file
+server/             Wallet-signed display names, writing through Firebase Admin
+data/               Sample events. Optional data/store.json import for Firestore
+firestore.rules     Access rules for profiles and page views
 ```
 
-The blockchain is the source of truth for ticket ownership, purchases, check-in, proof of attendance, and points. The local server only stores an optional display name and off-chain page-view counts.
+The blockchain is the source of truth for ticket ownership, purchases, check-in, proof of attendance, and points. Firestore stores an optional display name and off-chain page-view counts. Wallet connection stays in Core Wallet. CheckIn does not use Firebase Authentication or Cloud Storage.
 
 ## 1. Installation
 
@@ -55,8 +57,20 @@ cp .env.example .env
 | `VITE_CHECKIN_REWARDS_CONTRACT` | Frontend | Optional override for the rewards contract. |
 | `VITE_AVALANCHE_TESTNET_RPC` | Frontend | Read-only Fuji RPC. |
 | `VITE_DEPLOY_BLOCK` | Frontend | Optional start block for history queries. |
+| `VITE_FIREBASE_API_KEY` | Frontend | Firebase web config. Public in the built site. |
+| `VITE_FIREBASE_AUTH_DOMAIN` | Frontend | Firebase web config. |
+| `VITE_FIREBASE_PROJECT_ID` | Frontend | Firebase project id. Blank uses `checkin-local` for the emulator. |
+| `VITE_FIREBASE_STORAGE_BUCKET` | Frontend | Firebase web config. The app does not upload files. |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID` | Frontend | Firebase web config. |
+| `VITE_FIREBASE_APP_ID` | Frontend | Firebase web config. |
+| `VITE_FIREBASE_USE_EMULATOR` | Frontend | Set to `false` to use a real project from `npm run dev`. Dev already uses the emulator. |
+| `VITE_FIRESTORE_EMULATOR_HOST` | Frontend | Emulator host and port. Default `127.0.0.1:8080`. |
+| `FIREBASE_PROJECT_ID` | Metadata server | Admin SDK project. `checkin-local` for the emulator. |
+| `FIRESTORE_EMULATOR_HOST` | Metadata server | Set to `127.0.0.1:8080` for local. Unset it in production. |
+| `GOOGLE_APPLICATION_CREDENTIALS` | Metadata server | Path to a service account JSON file. Do not commit the file. |
+| `FIREBASE_SERVICE_ACCOUNT` | Metadata server | Service account JSON on one line. Alternative to the file path. Do not commit it. |
 
-Do not commit `.env`. Do not put a private key in any `VITE_` variable. The frontend reads the chain through the public RPC and sends transactions only through the browser wallet.
+Do not commit `.env`. Do not put a private key in any `VITE_` variable. The frontend reads the chain through the public RPC and sends transactions only through the browser wallet. The Firebase web keys are meant to be public. The service account is not.
 
 ## 3. Compile and test
 
@@ -132,7 +146,32 @@ Every confirmed transaction has a **View on Avalanche Explorer** link built from
 
 `https://testnet.snowtrace.io/tx/<hash>`
 
-## 9. Start the frontend
+## 9. Firebase and the local app
+
+Firestore holds two collections:
+
+- `profiles/{walletAddress}` with `displayName` and `updatedAt`
+- `views/{eventId}` with `count`
+
+Saving a display name still asks Core Wallet to sign a message. The metadata server checks that signature and writes the profile with the Admin SDK. The website reads profiles and increments page views with the Firebase JS SDK.
+
+Java 21 or newer is required for the emulator.
+
+Create a Firebase project when you want a shared database:
+
+1. In the Firebase console, create a project and create a Firestore database in Native mode (Standard).
+2. Register a web app and copy its config into the `VITE_FIREBASE_*` variables.
+3. Create a service account with the Cloud Datastore User role. Set `GOOGLE_APPLICATION_CREDENTIALS` or `FIREBASE_SERVICE_ACCOUNT`. Leave `FIRESTORE_EMULATOR_HOST` empty in that environment.
+4. Point the CLI at the project and deploy the rules and indexes:
+
+```bash
+npx firebase-tools use <your-project-id>
+npx firebase-tools deploy --only firestore:rules,firestore:indexes
+```
+
+Authentication and Storage stay off. Wallet signatures are the only identity check, and the app does not store files.
+
+Run everything locally against the emulator:
 
 ```bash
 npm run dev:all
@@ -140,12 +179,28 @@ npm run dev:all
 
 - Website: [http://localhost:5173](http://localhost:5173)
 - Metadata API: [http://127.0.0.1:3001](http://127.0.0.1:3001)
+- Emulator UI: [http://127.0.0.1:4000](http://127.0.0.1:4000)
 
-`dev:all` starts both. `npm run dev` starts only the website. Display names and page views need the API; tickets still work from the chain without it.
+`npm run dev` starts only the website, which still expects the emulator on port 8080. Tickets still work from the chain if Firestore is down. Names fall back to shortened wallet addresses, and page views are skipped.
+
+Import an old `data/store.json` file into the emulator or a real project:
+
+```bash
+npm run seed:firestore
+```
+
+With no file, that command seeds nothing. Demo events are still created on Avalanche with `npm run contracts:seed`.
+
+Metadata tests:
+
+```bash
+npm run test:metadata
+```
 
 Production build:
 
 ```bash
+npm run lint
 npm run build
 npm run preview
 ```
@@ -184,6 +239,7 @@ Points on a normal check-in are 10 for the purchase, 50 for check-in, 25 for par
 | Hardhat Node.js warning | Prefer Node 20 or 22. The contracts still compile on newer Node if the tests pass. |
 | Missing PRIVATE_KEY | Add a testnet key to `.env` before `contracts:deploy`. |
 | RPC or history errors | Wait and retry. Public Fuji RPCs rate-limit large log queries. `VITE_DEPLOY_BLOCK` is set automatically in `deployed.json`. |
+| Names stay as short addresses, or page views stay at 0 | Start `npm run dev:all` so the Firestore emulator and metadata server are running. A production build needs the `VITE_FIREBASE_*` variables and deployed rules. |
 
 ## What each contract does
 

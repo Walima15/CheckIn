@@ -5,9 +5,13 @@
   "scripts": {
     "dev": "vite",
     "server": "node server/index.mjs",
-    "dev:all": "concurrently -n server,web -c cyan,magenta \"npm run server\" \"npm run dev\"",
+    "emulators": "firebase emulators:start --only firestore --project checkin-local",
+    "dev:all": "concurrently -n emu,server,web -c blue,cyan,magenta \"npm run emulators\" \"npm run server\" \"npm run dev\"",
     "build": "tsc -p tsconfig.app.json --noEmit && vite build",
+    "lint": "tsc -p tsconfig.app.json --noEmit",
     "preview": "vite preview",
+    "test:metadata": "firebase emulators:exec --only firestore --project checkin-local \"node --test --test-concurrency=1 test-firestore/metadata.test.mjs\"",
+    "seed:firestore": "node scripts/seed-firestore.mjs",
     "contracts:compile": "hardhat compile",
     "contracts:abi": "node scripts/export-abi.mjs",
     "contracts:test": "hardhat test",
@@ -17,12 +21,17 @@
   "dependencies": {
     "ethers": "^6.15.0",
     "express": "^4.21.2",
+    "firebase": "^12.19.0",
+    "firebase-admin": "^13.10.0",
     "html5-qrcode": "^2.3.8",
     "lucide-react": "^0.544.0",
     "qrcode.react": "^4.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.1"
+  },
+  "overrides": {
+    "@firebase/app": "0.16.5"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
@@ -33,6 +42,7 @@
     "autoprefixer": "^10.4.21",
     "concurrently": "^9.2.1",
     "dotenv": "^17.2.2",
+    "firebase-tools": "^15.35.0",
     "hardhat": "^2.26.3",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",

@@ -1,0 +1,97 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// These rules are a prototype. Review them before sharing the app.
+//
+// Collection: profiles
+// Document ID: lowercase 0x wallet address (42 characters)
+// Fields:
+//   - displayName: string (required, 2-32 characters, no newlines)
+//   - updatedAt: int (required, unix milliseconds)
+// Client writes are denied. The metadata server verifies the wallet
+// signature and writes with the Admin SDK, which bypasses these rules.
+// The same shape is checked in server/index.mjs before that write.
+// Anyone may read one profile by address. Listing the collection is denied.
+// Display names are public on event pages. There is no email or other
+// private field on this document.
+//
+// Collection: views
+// Document ID: decimal event id, 1-78 digits (fits a uint256)
+// Fields:
+//   - count: int (required, starts at 1, each client write adds exactly 1)
+// Anyone may read counters. There is no auth wall on a page view; that
+// matches the previous public counter. Deletes are denied.
+//
+// ===============================================================
+
+// ===============================================================
+// Helper Functions
+// ===============================================================
+
+function isEventId(eventId) {
+  return eventId is string && eventId.matches('^[0-9]{1,78}$');
+}
+
+function isAddress(address) {
+  return address is string && address.matches('^0x[0-9a-f]{40}$');
+}
+
+function isValidProfile(data) {
+  return data.keys().hasOnly(['displayName', 'updatedAt'])
+    && data.displayName is string
+    && data.displayName.size() >= 2
+    && data.displayName.size() <= 32
+    && !data.displayName.matches('.*[\\n\\r].*')
+    && data.updatedAt is int
+    && data.updatedAt > 0;
+}
+
+function isValidView(data) {
+  return data is map
+    && data.keys().hasOnly(['count'])
+    && data.keys().hasAll(['count'])
+    && data.count is int
+    && data.count > 0;
+}
+
+function isValidViewCreate(eventId) {
+  return isEventId(eventId)
+    && isValidView(request.resource.data)
+    && request.resource.data.count == 1;
+}
+
+function isValidViewUpdate(eventId) {
+  return isEventId(eventId)
+    && isValidView(resource.data)
+    && isValidView(request.resource.data)
+    && request.resource.data.count == resource.data.count + 1
+    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['count']);
+}
+
+// ===============================================================
+// Rules
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /profiles/{address} {
+      allow get: if isAddress(address);
+      allow list: if false;
+      // Wallet signatures cannot be checked in rules. Clients cannot write.
+      // isValidProfile is the shape the server enforces before its Admin write.
+      allow create: if false && isValidProfile(request.resource.data);
+      allow update: if false && isValidProfile(request.resource.data);
+      allow delete: if false;
+    }
+
+    match /views/{eventId} {
+      allow get, list: if true;
+      allow create: if resource == null && isValidViewCreate(eventId);
+      allow update: if resource != null && isValidViewUpdate(eventId);
+      allow delete: if false;
+    }
+  }
+}

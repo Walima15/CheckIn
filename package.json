@@ -12,6 +12,7 @@
     "contracts:abi": "node scripts/export-abi.mjs",
     "contracts:test": "hardhat test",
     "contracts:deploy": "hardhat run scripts/deploy.ts --network fuji",
+    "contracts:fuji": "node scripts/deploy-fuji.mjs",
     "contracts:seed": "hardhat run scripts/seed-demo.ts --network fuji"
   },
   "dependencies": {

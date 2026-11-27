@@ -63,17 +63,18 @@ export default function Home() {
                 {shortAddress(wallet.address)}
               </Link>
             ) : (
-              <button
-                className="rounded-full border border-line px-5 py-3 text-sm font-semibold"
-                type="button"
-                onClick={() => wallet.connect().catch(() => undefined)}
-              >
-                Connect Wallet
-              </button>
+              <Link to="/signup" className="rounded-full border border-line px-5 py-3 text-sm font-semibold">
+                {wallet.account ? wallet.account.displayName : "Sign up"}
+              </Link>
             )}
           </div>
           <p className="mt-6 text-sm text-muted">
-            Wallet: {wallet.address ? `${shortAddress(wallet.address)} · ${wallet.isFuji ? "Avalanche Testnet" : "switch network"}` : "not connected"}
+            Wallet:{" "}
+            {wallet.address
+              ? `${shortAddress(wallet.address)} · ${wallet.walletLabel ?? "Wallet"} · ${wallet.isFuji ? "Avalanche Testnet" : "switch network"}`
+              : wallet.account
+                ? `${wallet.account.displayName} · no wallet connected`
+                : "not connected"}
           </p>
         </div>
       </section>

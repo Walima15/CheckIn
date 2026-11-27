@@ -6,10 +6,13 @@ interface EthereumProvider {
   removeListener?: (event: string, callback: (...args: unknown[]) => void) => void;
   providers?: EthereumProvider[];
   isAvalanche?: boolean;
+  isMetaMask?: boolean;
+  isCoreWallet?: boolean;
 }
 
 interface Window {
   ethereum?: EthereumProvider;
+  avalanche?: EthereumProvider;
 }
 
 interface ImportMetaEnv {

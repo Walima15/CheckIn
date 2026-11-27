@@ -14,6 +14,7 @@ import MyTickets from "@/pages/MyTickets";
 import Organizer from "@/pages/Organizer";
 import OrganizerEvent from "@/pages/OrganizerEvent";
 import Rewards from "@/pages/Rewards";
+import SignUp from "@/pages/SignUp";
 import TicketDetails from "@/pages/TicketDetails";
 
 class AppErrorBoundary extends React.Component<{ children: React.ReactNode }, { message: string }> {
@@ -52,6 +53,7 @@ export default function App() {
               <Route path="tickets/:id" element={<TicketDetails />} />
               <Route path="checkin" element={<CheckIn />} />
               <Route path="rewards" element={<Rewards />} />
+              <Route path="signup" element={<SignUp />} />
               <Route path="organizer" element={<Organizer />} />
               <Route path="organizer/events/:id" element={<OrganizerEvent />} />
               <Route path="activity" element={<Activity />} />

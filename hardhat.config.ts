@@ -25,6 +25,26 @@ const config: HardhatUserConfig = {
   mocha: {
     timeout: 60_000,
   },
+  etherscan: {
+    // Per-network key keeps Hardhat on this explorer's API. A single string
+    // would switch the plugin to Etherscan v2, which does not index Fuji.
+    apiKey: {
+      fuji: process.env.ROUTESCAN_API_KEY?.trim() || "routescan",
+    },
+    customChains: [
+      {
+        network: "fuji",
+        chainId: 43113,
+        urls: {
+          apiURL: "https://api.routescan.io/v2/network/testnet/evm/43113/etherscan/api",
+          browserURL: "https://testnet.snowtrace.io",
+        },
+      },
+    ],
+  },
+  sourcify: {
+    enabled: true,
+  },
 };
 
 export default config;

@@ -1,6 +1,37 @@
-import { ethers, network } from "hardhat";
+import { ethers, network, run } from "hardhat";
 import * as fs from "fs";
 import * as path from "path";
+
+async function verifyContract(address: string, constructorArguments: string[]) {
+  const attempts: { label: string; run: () => Promise<void> }[] = [
+    {
+      label: "Routescan / Snowtrace",
+      run: () =>
+        run("verify:etherscan", {
+          address,
+          constructorArgsParams: constructorArguments,
+          libraries: {},
+        }),
+    },
+    {
+      label: "Sourcify",
+      run: () => run("verify:sourcify", { address, libraries: {} }),
+    },
+  ];
+  for (const attempt of attempts) {
+    try {
+      await attempt.run();
+      console.log(`Verified ${address} on ${attempt.label}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      if (/already verified/i.test(message)) {
+        console.log(`Already verified ${address} on ${attempt.label}`);
+        continue;
+      }
+      console.error(`Could not verify ${address} on ${attempt.label}: ${message}`);
+    }
+  }
+}
 
 async function main() {
   if (network.name === "fuji" && network.config.chainId !== 43113) {
@@ -8,7 +39,14 @@ async function main() {
   }
 
   const [deployer] = await ethers.getSigners();
+  const balance = await ethers.provider.getBalance(deployer.address);
   console.log(`Deploying to ${network.name} with ${deployer.address}`);
+  console.log(`Balance ${ethers.formatEther(balance)} AVAX`);
+  if (balance === 0n) {
+    throw new Error(
+      `Deployer ${deployer.address} has 0 AVAX on ${network.name}. Fund that address with Fuji testnet AVAX, then rerun. See DEPLOYMENT.md.`
+    );
+  }
 
   const Events = await ethers.getContractFactory("CheckInEvents");
   const events = await Events.deploy();
@@ -57,6 +95,11 @@ async function main() {
     console.log(`Events: https://testnet.snowtrace.io/address/${addresses.events}`);
     console.log(`Tickets: https://testnet.snowtrace.io/address/${addresses.tickets}`);
     console.log(`Rewards: https://testnet.snowtrace.io/address/${addresses.rewards}`);
+    console.log("Waiting for the explorer to index the contracts before verification...");
+    await new Promise((resolve) => setTimeout(resolve, 20_000));
+    await verifyContract(addresses.events, []);
+    await verifyContract(addresses.rewards, []);
+    await verifyContract(addresses.tickets, [addresses.events, addresses.rewards]);
   }
 }
 

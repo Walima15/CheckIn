@@ -72,18 +72,18 @@ npm run contracts:abi
 
 1. Create a dedicated testnet wallet and put testnet AVAX in it (see the faucet section).
 2. Put that wallet's private key in `.env` as `PRIVATE_KEY`. This key is only for Hardhat. Never paste it into the CheckIn website.
-3. Deploy:
+3. Deploy with one command:
 
 ```bash
-npm run contracts:deploy
+npm run contracts:fuji
 ```
 
-This deploys `CheckInEvents`, `CheckInRewards`, and `CheckInTickets` to Fuji (chain ID 43113), links them, and renounces the one-time wiring owner. It writes:
+That checks the Fuji chain id and the deployer balance, then runs the same deploy as `npm run contracts:deploy`. It deploys `CheckInEvents`, `CheckInRewards`, and `CheckInTickets` to Fuji (chain ID 43113), links them, renounces the one-time wiring owner, and submits the source to the Fuji explorer (Routescan / Snowtrace) and Sourcify. It writes:
 
 - `deployments/fuji.json`
 - `src/config/deployed.json`
 
-The second file is what the website reads. Restart the frontend after it changes.
+The second file is what the website reads. Restart the frontend after it changes. The current Fuji deployer address, explorer links, and faucet blockers are in `DEPLOYMENT.md`.
 
 Optional demo events, owned by the deployer wallet:
 
@@ -118,7 +118,7 @@ If another wallet also injects `window.ethereum`, CheckIn prefers the provider t
 
 ## 7. Testnet faucet
 
-Request Fuji AVAX from [https://faucet.avax.network/](https://faucet.avax.network/). Core's testnet mode may also show a faucet. You need a small amount for gas, and a little more if a ticket has a price such as 0.01 AVAX.
+Request Fuji AVAX from the [Builder Hub faucet](https://build.avax.network/console/primary-network/faucet). [https://faucet.avax.network/](https://faucet.avax.network/) redirects there, and the page asks you to log in. Core's testnet mode may also show a faucet. You need a small amount for gas, and a little more if a ticket has a price such as 0.01 AVAX. `DEPLOYMENT.md` lists the other faucets that were tried for the deployer wallet.
 
 The deployer wallet needs enough AVAX to deploy all three contracts. A normal Core wallet needs enough for creating an event, buying a ticket, and checking in.
 

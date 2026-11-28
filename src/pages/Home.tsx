@@ -40,30 +40,30 @@ export default function Home() {
   return (
     <div>
       <PageTitle title="CheckIn" />
-      <section className="relative overflow-hidden rounded-[2rem] border border-line bg-surface px-6 py-12 sm:px-10 sm:py-16">
+      <section className="relative overflow-hidden rounded-[2rem] border border-line bg-surface px-5 py-10 sm:px-10 sm:py-16">
         <div className="grid-fade pointer-events-none absolute inset-0" />
         <div className="relative max-w-3xl">
           <p className="inline-flex rounded-full border border-line bg-bg px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em]">
             Avalanche Testnet
           </p>
-          <h1 className="mt-5 font-display text-6xl font-extrabold tracking-tight sm:text-7xl">CheckIn</h1>
-          <p className="mt-3 font-display text-2xl font-semibold sm:text-3xl">Buy. Attend. Earn. Connect.</p>
+          <h1 className="mt-5 font-display text-5xl font-extrabold tracking-tight sm:text-7xl">CheckIn</h1>
+          <p className="mt-3 font-display text-2xl font-semibold leading-tight sm:text-3xl">Buy. Attend. Earn. Connect.</p>
           <p className="mt-4 max-w-xl text-lg text-muted">
             Blockchain-powered event ticketing and attendance verification built on Avalanche.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/events" className="rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white">
+            <Link to="/events" className="inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white">
               Explore Events
             </Link>
-            <Link to="/create" className="rounded-full border border-line bg-bg px-5 py-3 text-sm font-semibold">
+            <Link to="/create" className="inline-flex min-h-11 items-center justify-center rounded-full border border-line bg-bg px-5 py-3 text-sm font-semibold">
               Create Event
             </Link>
             {wallet.address ? (
-              <Link to="/tickets" className="rounded-full border border-line px-5 py-3 text-sm font-semibold">
+              <Link to="/tickets" className="inline-flex min-h-11 items-center justify-center rounded-full border border-line px-5 py-3 text-sm font-semibold">
                 {shortAddress(wallet.address)}
               </Link>
             ) : (
-              <Link to="/signup" className="rounded-full border border-line px-5 py-3 text-sm font-semibold">
+              <Link to="/signup" className="inline-flex min-h-11 items-center justify-center rounded-full border border-line px-5 py-3 text-sm font-semibold">
                 {wallet.account ? wallet.account.displayName : "Sign up"}
               </Link>
             )}
@@ -81,7 +81,7 @@ export default function Home() {
 
       <section id="how" className="mt-16">
         <h2 className="font-display text-3xl font-bold">How It Works</h2>
-        <div className="mt-6 grid gap-4 md:grid-cols-5">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {steps.map((step) => (
             <Panel key={step.n}>
               <p className="font-display text-3xl font-extrabold text-accent">{step.n}</p>
@@ -149,7 +149,7 @@ export default function Home() {
             <li>Scan QR codes and check attendees in on-chain.</li>
             <li>See sales, attendance, and check-in rate.</li>
           </ul>
-          <Link to="/create" className="mt-5 inline-flex text-sm font-semibold text-accent">
+          <Link to="/create" className="mt-5 inline-flex min-h-11 items-center text-sm font-semibold text-accent">
             Create Event
           </Link>
         </Panel>
@@ -161,7 +161,7 @@ export default function Home() {
             <li>Show the QR code at the door.</li>
             <li>Collect Proof of Attendance and points.</li>
           </ul>
-          <Link to="/events" className="mt-5 inline-flex text-sm font-semibold text-accent">
+          <Link to="/events" className="mt-5 inline-flex min-h-11 items-center text-sm font-semibold text-accent">
             Explore Events
           </Link>
         </Panel>
@@ -198,13 +198,13 @@ export default function Home() {
       </section>
 
       <section className="mt-16 rounded-[2rem] bg-accent px-6 py-12 text-white sm:px-10">
-        <h2 className="font-display text-4xl font-extrabold">Ready for the next event?</h2>
+        <h2 className="font-display text-3xl font-extrabold leading-tight sm:text-4xl">Ready for the next event?</h2>
         <p className="mt-3 max-w-xl text-white/85">Create an event or buy a ticket with testnet AVAX. Nothing here moves mainnet funds.</p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link to="/events" className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-black">
+          <Link to="/events" className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-black">
             Explore Events
           </Link>
-          <Link to="/create" className="rounded-full border border-white/40 px-5 py-3 text-sm font-semibold">
+          <Link to="/create" className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/40 px-5 py-3 text-sm font-semibold">
             Create Event
           </Link>
         </div>

@@ -82,13 +82,13 @@ export default function CreateEvent() {
   return (
     <div className="mx-auto max-w-3xl">
       <PageTitle title="Create Event" />
-      <h1 className="font-display text-4xl font-bold">Create Event</h1>
+      <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">Create Event</h1>
       <p className="mt-2 text-muted">Your connected wallet becomes the organizer. Creation is a real Avalanche Testnet transaction.</p>
       <Panel className="mt-6">
         <EventForm values={values} onChange={setValues} />
         {error ? <p className="mt-4 text-sm text-accent">{error}</p> : null}
         <p className="mt-4 text-xs text-muted">Avalanche Testnet · Testnet AVAX only — No real funds are required. You only pay the network fee.</p>
-        <Button className="mt-5" onClick={submit}>
+        <Button className="mt-5 w-full sm:w-auto" onClick={submit}>
           {wallet.address ? "Create on Avalanche" : "Connect Wallet"}
         </Button>
       </Panel>

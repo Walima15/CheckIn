@@ -96,15 +96,19 @@ export function TxProvider({ children }: { children: React.ReactNode }) {
     <TxContext.Provider value={value}>
       {children}
       {request ? (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center">
-          <div className="w-full max-w-lg rounded-3xl border border-line bg-surface p-6 shadow-card" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 sm:items-center sm:p-4">
+          <div
+            className="max-h-[100dvh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-line bg-surface p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-card sm:max-h-[min(90dvh,40rem)] sm:rounded-3xl sm:p-6"
+            role="dialog"
+            aria-modal="true"
+          >
             <div className="mb-5 flex items-start justify-between gap-4">
-              <div>
+              <div className="min-w-0">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">Avalanche Testnet</p>
                 <h2 className="mt-1 font-display text-2xl font-bold">{request.title}</h2>
               </div>
               {status !== "waiting" && status !== "processing" ? (
-                <button className="text-sm text-muted" onClick={close} type="button">
+                <button className="inline-flex min-h-11 shrink-0 items-center px-2 text-sm text-muted" onClick={close} type="button">
                   Close
                 </button>
               ) : null}
@@ -138,19 +142,19 @@ export function TxProvider({ children }: { children: React.ReactNode }) {
             ) : null}
             {error ? <p className="mt-4 rounded-xl bg-accent/10 px-3 py-2 text-sm text-accent">{error}</p> : null}
             {hash && status !== "success" ? (
-              <a className="mt-3 block text-sm text-accent" href={txUrl(hash)} target="_blank" rel="noreferrer">
+              <a className="mt-3 block break-all text-sm text-accent" href={txUrl(hash)} target="_blank" rel="noreferrer">
                 {hash}
               </a>
             ) : null}
 
-            <div className="mt-5 flex justify-end gap-2">
+            <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-end">
               {status === "review" ? (
-                <Button onClick={confirm} disabled={estimating || Boolean(error && !gas)}>
+                <Button className="w-full sm:w-auto" onClick={confirm} disabled={estimating || Boolean(error && !gas)}>
                   Confirm transaction
                 </Button>
               ) : null}
               {status === "success" || status === "failed" ? (
-                <Button variant="secondary" onClick={close}>
+                <Button className="w-full sm:w-auto" variant="secondary" onClick={close}>
                   Done
                 </Button>
               ) : null}
@@ -165,8 +169,8 @@ export function TxProvider({ children }: { children: React.ReactNode }) {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-start justify-between gap-4">
-      <dt className="text-muted">{label}</dt>
-      <dd className="text-right font-medium">{value}</dd>
+      <dt className="shrink-0 text-muted">{label}</dt>
+      <dd className="min-w-0 break-words text-right font-medium">{value}</dd>
     </div>
   );
 }

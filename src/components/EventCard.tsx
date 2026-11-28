@@ -41,14 +41,14 @@ export function EventCard({
         </div>
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="font-display text-xl font-bold leading-tight">{name}</h3>
+        <h3 className="break-words font-display text-xl font-bold leading-tight">{name}</h3>
         <p className="mt-1 text-sm text-muted">{organizer}</p>
         <div className="mt-4 space-y-1.5 text-sm text-muted">
-          <p className="flex items-center gap-2">
-            <Calendar className="h-4 w-4" /> {date} · {time}
+          <p className="flex items-start gap-2">
+            <Calendar className="mt-0.5 h-4 w-4 shrink-0" /> <span className="min-w-0 break-words">{date} · {time}</span>
           </p>
-          <p className="flex items-center gap-2">
-            <MapPin className="h-4 w-4" /> {location}
+          <p className="flex items-start gap-2">
+            <MapPin className="mt-0.5 h-4 w-4 shrink-0" /> <span className="min-w-0 break-words">{location}</span>
           </p>
         </div>
         <div className="mt-4 flex items-end justify-between">
@@ -59,7 +59,7 @@ export function EventCard({
         </div>
         <Link
           to={href}
-          className="mt-5 inline-flex items-center justify-center rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white"
+          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white"
         >
           {action}
         </Link>

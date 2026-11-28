@@ -84,7 +84,7 @@ export function SignUpOptions({
       {purpose === "signup" ? (
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">Sign up</p>
-          <h1 className="mt-2 font-display text-4xl font-bold">Join CheckIn</h1>
+          <h1 className="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">Join CheckIn</h1>
           <p className="mt-3 text-muted">
             Core Wallet is the recommended way to sign up. You can connect it in one step, use another wallet, or create a CheckIn account with no wallet at all.
           </p>
@@ -99,7 +99,7 @@ export function SignUpOptions({
 
       <div className="mt-6 grid gap-4">
         <Panel>
-          <div className="flex items-start justify-between gap-3">
+          <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/10 text-accent">
                 <Wallet className="h-5 w-5" />
@@ -114,11 +114,11 @@ export function SignUpOptions({
             ) : null}
           </div>
 
-          <div className="mt-5 flex flex-wrap gap-2">
-            <Button onClick={onConnectCore} disabled={connecting}>
+          <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <Button className="w-full sm:w-auto" onClick={onConnectCore} disabled={connecting}>
               {connecting ? "Connecting…" : "Connect Core Wallet"}
             </Button>
-            <Button variant="secondary" onClick={() => setGuideOpen(true)} disabled={connecting}>
+            <Button className="w-full sm:w-auto" variant="secondary" onClick={() => setGuideOpen(true)} disabled={connecting}>
               Create a Core Wallet
             </Button>
           </div>
@@ -130,7 +130,7 @@ export function SignUpOptions({
                 <div>
                   <p className="font-semibold">Install Core</p>
                   <p className="mt-1 text-sm text-muted">{install.body}</p>
-                  <a className="mt-3 inline-flex rounded-full border border-line bg-bg px-4 py-2 text-sm font-semibold" href={CORE_LINKS[platform]} target="_blank" rel="noreferrer">
+                  <a className="mt-3 inline-flex min-h-11 items-center rounded-full border border-line bg-bg px-4 py-2 text-sm font-semibold" href={CORE_LINKS[platform]} target="_blank" rel="noreferrer">
                     {install.label}
                   </a>
                 </div>
@@ -166,7 +166,7 @@ export function SignUpOptions({
                   ? `${otherWalletName ?? "Another browser wallet"} is available. You can sign up with it instead of Core.`
                   : "Use MetaMask or another injected EVM wallet if you have one installed."}
               </p>
-              <Button className="mt-4" variant="secondary" onClick={onConnectOther} disabled={connecting}>
+              <Button className="mt-4 w-full sm:w-auto" variant="secondary" onClick={onConnectOther} disabled={connecting}>
                 Connect another wallet
               </Button>
               {!hasOtherWallet ? <p className="mt-2 text-xs text-muted">No other browser wallet was detected. You can still create a CheckIn account.</p> : null}
@@ -188,7 +188,7 @@ export function SignUpOptions({
                       autoComplete="nickname"
                     />
                   </Field>
-                  <Button type="submit" variant="secondary" disabled={connecting}>
+                  <Button className="w-full sm:w-auto" type="submit" variant="secondary" disabled={connecting}>
                     Create account
                   </Button>
                 </form>

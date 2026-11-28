@@ -31,7 +31,7 @@ export default function Activity() {
   return (
     <div>
       <PageTitle title="Activity" />
-      <h1 className="font-display text-4xl font-bold">Transaction history</h1>
+      <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">Transaction history</h1>
       <p className="mt-2 text-muted">Purchases, check-ins, rewards, and events for this wallet on Avalanche Testnet.</p>
       {!wallet.address ? (
         <div className="mt-6">
@@ -48,7 +48,7 @@ export default function Activity() {
                 <p className="font-semibold">{item.title}</p>
                 <p className="text-sm text-muted">{item.detail}</p>
               </div>
-              <a className="text-sm font-semibold text-accent" href={txUrl(item.hash)} target="_blank" rel="noreferrer">
+              <a className="inline-flex min-h-11 items-center text-sm font-semibold text-accent" href={txUrl(item.hash)} target="_blank" rel="noreferrer">
                 View on Avalanche Explorer
               </a>
             </Panel>

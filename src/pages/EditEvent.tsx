@@ -65,13 +65,13 @@ export default function EditEvent() {
   return (
     <div className="mx-auto max-w-3xl">
       <PageTitle title="Edit Event" />
-      <h1 className="font-display text-4xl font-bold">Edit Event</h1>
+      <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">Edit Event</h1>
       {denied ? <p className="mt-4 text-sm text-accent">Only the organizer wallet can change this event.</p> : null}
       {values ? (
         <Panel className="mt-6">
           <EventForm values={values} onChange={setValues} showActive showDemo={false} />
           {error ? <p className="mt-4 text-sm text-accent">{error}</p> : null}
-          <Button className="mt-5" onClick={save} disabled={Boolean(denied)}>
+          <Button className="mt-5 w-full sm:w-auto" onClick={save} disabled={Boolean(denied)}>
             Save on Avalanche
           </Button>
         </Panel>

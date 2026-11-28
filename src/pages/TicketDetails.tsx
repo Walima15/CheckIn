@@ -102,7 +102,7 @@ export default function TicketDetails() {
         <TxBanner />
       </div>
       <Panel className="text-center">
-        <div className="mx-auto w-fit rounded-2xl bg-white p-4">
+        <div className="mx-auto w-full max-w-[252px] rounded-2xl bg-white p-3 [&_svg]:h-auto [&_svg]:w-full">
           <QRCodeSVG value={ticketQrValue(ticket.ticketId)} size={220} includeMargin />
         </div>
         <p className="mt-4 font-display text-2xl font-bold">{formatTicketCode(ticket.ticketId)}</p>
@@ -113,7 +113,7 @@ export default function TicketDetails() {
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="text-xs uppercase tracking-wide text-muted">Ticket</p>
-              <h1 className="font-display text-3xl font-bold">{ticket.event.name}</h1>
+              <h1 className="break-words font-display text-3xl font-bold leading-tight">{ticket.event.name}</h1>
             </div>
             <StatusPill status={status} />
           </div>
@@ -153,13 +153,13 @@ export default function TicketDetails() {
             <h2 className="font-display text-xl font-bold">Transfer Ticket</h2>
             <p className="mt-1 text-sm text-muted">Transfers are blocked after check-in. The recipient receives ownership through a blockchain transaction.</p>
             <input
-              className="mt-4 w-full rounded-xl border border-line bg-bg px-3 py-2.5"
+              className="mt-4 min-h-11 w-full rounded-xl border border-line bg-bg px-3 py-2.5 text-base"
               value={recipient}
               onChange={(event) => setRecipient(event.target.value)}
               placeholder="0x recipient wallet"
             />
             {error ? <p className="mt-3 text-sm text-accent">{error}</p> : null}
-            <Button className="mt-4" onClick={transfer}>Transfer Ticket</Button>
+            <Button className="mt-4 w-full sm:w-auto" onClick={transfer}>Transfer Ticket</Button>
           </Panel>
         ) : null}
         {error && (ticket.checkedIn || !mine) ? <p className="text-sm text-accent">{error}</p> : null}

@@ -55,7 +55,7 @@ export default function Events() {
       <PageTitle title="Events" />
       <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <h1 className="font-display text-4xl font-bold">Events</h1>
+          <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">Events</h1>
           <p className="mt-2 text-muted">Discover events and buy a ticket with testnet AVAX.</p>
         </div>
       </div>

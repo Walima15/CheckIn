@@ -97,10 +97,10 @@ export default function EventDetails() {
       <TxBanner />
       <div className="overflow-hidden rounded-[2rem] border border-line bg-surface">
         <EventCover src={event.imageURI} category={event.category} name={event.name} className="h-64 sm:h-80" />
-        <div className="grid gap-8 p-6 lg:grid-cols-[1.4fr_0.8fr] sm:p-8">
+        <div className="grid gap-6 p-4 sm:gap-8 sm:p-8 lg:grid-cols-[1.4fr_0.8fr]">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">{event.category}</p>
-            <h1 className="mt-2 font-display text-4xl font-bold">{event.name}</h1>
+            <h1 className="mt-2 break-words font-display text-3xl font-bold leading-tight sm:text-4xl">{event.name}</h1>
             <p className="mt-4 whitespace-pre-wrap text-muted">{event.description}</p>
             <dl className="mt-6 grid gap-4 text-sm sm:grid-cols-2">
               <Detail label="Organizer" value={organizerName} />
@@ -115,10 +115,10 @@ export default function EventDetails() {
           </div>
           <Panel>
             <p className="text-sm text-muted">Ticket price</p>
-            <p className="font-display text-4xl font-bold">{formatAvax(event.priceWei)} AVAX</p>
+            <p className="font-display text-3xl font-bold sm:text-4xl">{formatAvax(event.priceWei)} AVAX</p>
             <p className="mt-2 text-sm">{remaining.toString()} of {event.maxSupply.toString()} available</p>
             <p className="mt-4 break-all text-xs text-muted">Contract {addresses.tickets || "not configured"}</p>
-            <a className="mt-2 block text-sm text-accent" href={addressUrl(event.organizer)} target="_blank" rel="noreferrer">
+            <a className="mt-2 flex min-h-11 items-center text-sm text-accent" href={addressUrl(event.organizer)} target="_blank" rel="noreferrer">
               Organizer on explorer
             </a>
             <p className="mt-4 text-xs text-muted">Avalanche Testnet · Testnet AVAX only — No real funds are required.</p>
@@ -127,7 +127,7 @@ export default function EventDetails() {
               {soldOut ? (event.active ? "Sold out" : "Sales paused") : "Buy Ticket"}
             </Button>
             {wallet.address?.toLowerCase() === event.organizer.toLowerCase() ? (
-              <Link className="mt-3 block text-center text-sm font-semibold" to={`/events/${event.id.toString()}/edit`}>
+              <Link className="mt-3 flex min-h-11 items-center justify-center text-sm font-semibold" to={`/events/${event.id.toString()}/edit`}>
                 Edit event
               </Link>
             ) : null}

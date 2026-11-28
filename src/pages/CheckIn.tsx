@@ -123,7 +123,7 @@ export default function CheckIn() {
   return (
     <div className="mx-auto max-w-3xl">
       <PageTitle title="Check In" />
-      <h1 className="font-display text-4xl font-bold">Check In</h1>
+      <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">Check In</h1>
       <p className="mt-2 text-muted">
         {scopedEvent ? `Checking in for ${scopedEvent.name}.` : "Scan an attendee QR code or enter a ticket ID."}
       </p>
@@ -143,12 +143,12 @@ export default function CheckIn() {
           }}
         >
           <input
-            className="w-full rounded-xl border border-line bg-bg px-3 py-2.5"
+            className="min-h-11 w-full rounded-xl border border-line bg-bg px-3 py-2.5 text-base"
             value={manual}
             onChange={(event) => setManual(event.target.value)}
             placeholder="CHK-000123 or raw ticket ID"
           />
-          <Button type="submit" variant="secondary">Verify ticket</Button>
+          <Button className="w-full sm:w-auto" type="submit" variant="secondary">Verify ticket</Button>
         </form>
         <p className="mt-3 text-xs text-muted">Camera access needs localhost or HTTPS. You can always type the ticket ID.</p>
       </Panel>

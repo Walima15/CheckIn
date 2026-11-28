@@ -63,7 +63,7 @@ export default function Rewards() {
     return (
       <div>
         <PageTitle title="My Rewards" />
-        <h1 className="font-display text-4xl font-bold">My Rewards</h1>
+        <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">My Rewards</h1>
         <p className="mt-6 text-sm text-muted">Loading rewards…</p>
       </div>
     );
@@ -73,7 +73,7 @@ export default function Rewards() {
     return (
       <div>
         <PageTitle title="My Rewards" />
-        <h1 className="font-display text-4xl font-bold">My Rewards</h1>
+        <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">My Rewards</h1>
         <p className="mt-2 max-w-2xl text-muted">Testnet points for showing up. These are not a cash token and cannot be withdrawn as money.</p>
         <div className="mt-6 max-w-xl">
           <SignUpOptions
@@ -98,7 +98,7 @@ export default function Rewards() {
   return (
     <div>
       <PageTitle title="My Rewards" />
-      <h1 className="font-display text-4xl font-bold">My Rewards</h1>
+      <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">My Rewards</h1>
       <p className="mt-2 max-w-2xl text-muted">Testnet points for showing up. These are not a cash token and cannot be withdrawn as money.</p>
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
         <Stat label="Total points" value={points.toString()} />
@@ -148,7 +148,7 @@ export default function Rewards() {
       <div className="mt-4 overflow-hidden rounded-3xl border border-line">
         {history.length === 0 ? <p className="p-5 text-sm text-muted">No rewards yet.</p> : null}
         {history.map((item, index) => (
-          <div key={`${item.ticketId}-${item.reason}-${index}`} className="flex items-center justify-between border-b border-line px-5 py-3 text-sm last:border-0">
+              <div key={`${item.ticketId}-${item.reason}-${index}`} className="flex flex-col gap-1 border-b border-line px-4 py-3 text-sm last:border-0 sm:flex-row sm:items-center sm:justify-between sm:px-5">
             <div>
               <p className="font-medium">{item.reason}</p>
               <p className="text-muted">{formatDateTime(item.timestamp)}</p>
@@ -165,7 +165,7 @@ function Stat({ label, value }: { label: string; value: string }) {
   return (
     <Panel>
       <p className="text-sm text-muted">{label}</p>
-      <p className="mt-1 font-display text-4xl font-bold">{value}</p>
+      <p className="mt-1 font-display text-3xl font-bold leading-tight sm:text-4xl">{value}</p>
     </Panel>
   );
 }

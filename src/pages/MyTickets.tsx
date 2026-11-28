@@ -40,7 +40,7 @@ export default function MyTickets() {
     <div>
       <PageTitle title="My Tickets" />
       <TxBanner />
-      <h1 className="font-display text-4xl font-bold">My Tickets</h1>
+      <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">My Tickets</h1>
       <p className="mt-2 text-muted">Tickets owned by your connected wallet on Avalanche Testnet.</p>
       {!wallet.address ? (
         <div className="mt-6">
@@ -78,8 +78,8 @@ export default function MyTickets() {
                 <Row label="Check-in status" value={ticket.checkedIn ? "Checked in" : "Not checked in"} />
               </dl>
               <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
-                <Link to={`/tickets/${ticket.ticketId.toString()}`}>Open ticket</Link>
-                <a href={nftUrl(ticket.ticketId)} target="_blank" rel="noreferrer">View on Explorer</a>
+                <Link className="inline-flex min-h-11 items-center" to={`/tickets/${ticket.ticketId.toString()}`}>Open ticket</Link>
+                <a className="inline-flex min-h-11 items-center" href={nftUrl(ticket.ticketId)} target="_blank" rel="noreferrer">View on Explorer</a>
               </div>
             </Panel>
           );
@@ -91,9 +91,9 @@ export default function MyTickets() {
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex justify-between gap-4">
+    <div className="flex flex-col gap-0.5 sm:flex-row sm:justify-between sm:gap-4">
       <dt className="text-muted">{label}</dt>
-      <dd>{value}</dd>
+      <dd className="min-w-0 break-words sm:text-right">{value}</dd>
     </div>
   );
 }

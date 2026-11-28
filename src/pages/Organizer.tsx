@@ -69,10 +69,10 @@ export default function Organizer() {
       <TxBanner />
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="font-display text-4xl font-bold">Organizer Dashboard</h1>
+          <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">Organizer Dashboard</h1>
           <p className="mt-2 text-muted">Create an event with your wallet to become its organizer.</p>
         </div>
-        <Link to="/create" className="rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white">Create Event</Link>
+        <Link to="/create" className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white sm:w-auto">Create Event</Link>
       </div>
 
       {!wallet.address ? (
@@ -81,7 +81,7 @@ export default function Organizer() {
         </div>
       ) : (
         <>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
             <Stat label="Total events" value={events.length.toString()} />
             <Stat label="Tickets sold" value={sold.toString()} />
             <Stat label="Revenue" value={`${formatAvax(revenue)} AVAX`} />
@@ -142,7 +142,7 @@ export default function Organizer() {
             <h2 className="font-display text-xl font-bold">Display name</h2>
             <p className="mt-1 text-sm text-muted">Signs a message in Core Wallet. It does not cost AVAX and does not reveal your seed phrase.</p>
             <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-              <input className="w-full rounded-xl border border-line bg-bg px-3 py-2.5" value={displayName} onChange={(event) => setDisplayName(event.target.value)} placeholder="Your organizer name" />
+              <input className="min-h-11 w-full rounded-xl border border-line bg-bg px-3 py-2.5 text-base" value={displayName} onChange={(event) => setDisplayName(event.target.value)} placeholder="Your organizer name" />
               <Button onClick={saveName}>Save</Button>
             </div>
             {notice ? <p className="mt-3 text-sm text-good">{notice}</p> : null}

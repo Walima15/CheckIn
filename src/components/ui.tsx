@@ -14,7 +14,7 @@ export function Button({
   return (
     <button
       className={cx(
-        "inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50",
         variants[variant],
         className,
       )}
@@ -42,7 +42,7 @@ export function Field({
 }
 
 export const inputClass =
-  "w-full rounded-xl border border-line bg-bg px-3 py-2.5 text-ink outline-none ring-accent focus:ring-2";
+  "min-h-11 w-full rounded-xl border border-line bg-bg px-3 py-2.5 text-base text-ink outline-none ring-accent focus:ring-2";
 
 export function PageTitle({ title }: { title: string }) {
   useEffect(() => {
@@ -52,7 +52,7 @@ export function PageTitle({ title }: { title: string }) {
 }
 
 export function Panel({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <section className={cx("rounded-3xl border border-line bg-surface p-5 shadow-card sm:p-6", className)}>{children}</section>;
+  return <section className={cx("rounded-3xl border border-line bg-surface p-4 shadow-card sm:p-6", className)}>{children}</section>;
 }
 
 export function EmptyState({

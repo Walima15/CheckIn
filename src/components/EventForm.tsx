@@ -42,7 +42,7 @@ export function EventForm({
       <Field label="Date">
         <input className={inputClass} type="date" value={values.date} onChange={(event) => set("date", event.target.value)} />
       </Field>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <Field label="Start time">
           <input className={inputClass} type="time" value={values.startTime} onChange={(event) => set("startTime", event.target.value)} />
         </Field>
@@ -65,20 +65,20 @@ export function EventForm({
       <Field label="Organizer bonus points" hint="Issued automatically when an attendee checks in.">
         <input className={inputClass} inputMode="numeric" value={values.bonusPoints} onChange={(event) => set("bonusPoints", event.target.value)} />
       </Field>
-      <div className="flex flex-col justify-end gap-3 pb-2 text-sm">
-        <label className="flex items-center gap-2">
-          <input type="checkbox" checked={values.transfersAllowed} onChange={(event) => set("transfersAllowed", event.target.checked)} />
+      <div className="flex flex-col justify-end gap-1 pb-2 text-sm sm:col-span-1">
+        <label className="flex min-h-11 items-center gap-3">
+          <input className="h-5 w-5" type="checkbox" checked={values.transfersAllowed} onChange={(event) => set("transfersAllowed", event.target.checked)} />
           Allow ticket transfers before check-in
         </label>
         {showDemo ? (
-          <label className="flex items-center gap-2">
-            <input type="checkbox" checked={values.demo} onChange={(event) => set("demo", event.target.checked)} />
+          <label className="flex min-h-11 items-center gap-3">
+            <input className="h-5 w-5" type="checkbox" checked={values.demo} onChange={(event) => set("demo", event.target.checked)} />
             Mark as a demo / sample event
           </label>
         ) : null}
         {showActive ? (
-          <label className="flex items-center gap-2">
-            <input type="checkbox" checked={values.active} onChange={(event) => set("active", event.target.checked)} />
+          <label className="flex min-h-11 items-center gap-3">
+            <input className="h-5 w-5" type="checkbox" checked={values.active} onChange={(event) => set("active", event.target.checked)} />
             Event is on sale
           </label>
         ) : null}
